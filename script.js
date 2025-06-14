@@ -1,11 +1,27 @@
 // -----------Common Doms
 let HtmlBody = document.querySelector('.MainDiv')
-// --------------Function
+let SearchInput = document.querySelector('.searchInput')
+let AllUser = []
+
+// --------------Api
 fetch('https://jsonplaceholder.typicode.com/users')
 .then(response => response.json())
-.then(data =>{
-    data.map((item)=>{
+.then(data => {
+    AllUser = data
+    renderUsers(data)
+})
 
+// --------------Search Function
+SearchInput.addEventListener('input', ()=>{
+    let FilterText = SearchInput.value.toLowerCase()
+    let FilteredUser = AllUser.filter(user => user.username.toLowerCase().includes(FilterText))
+    renderUsers(FilteredUser)
+})
+
+// --------------Execution
+function renderUsers(user){
+    HtmlBody.innerHTML = ''
+    user.forEach(item =>{
         // --------Creating Elements
         let Container  = document.createElement('div')
         let ImgDiv     = document.createElement('div')
@@ -45,7 +61,7 @@ fetch('https://jsonplaceholder.typicode.com/users')
         Street.classList.add('Street')
         ZipCode.classList.add('zipcode')
         Suite.classList.add('Suite')
-
+        
         // ----------Data Print From api
         idNo.innerText = `Id : ${item.id}`
         Name.innerHTML = `${item.name}`
@@ -55,5 +71,8 @@ fetch('https://jsonplaceholder.typicode.com/users')
         ZipCode.innerText = `Zip Code : ${item.address.zipcode}`
         Suite.innerText  = `Suite : ${item.address.suite}`
     })
-})
+    if(HtmlBody.innerHTML == ''){
+        HtmlBody.innerHTML = `User Doesn't Exist`
+    }
 
+}
