@@ -9,6 +9,13 @@ body{
     background-color: #f4f4f4;
     font-family: "Poppins", sans-serif;
 }
+.MainDiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
 .container{
     padding-top: 20px;
     display: flex;
